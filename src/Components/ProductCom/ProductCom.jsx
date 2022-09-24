@@ -24,8 +24,8 @@ export default function ProductCom() {
       }
       setLoading(false);
     }
-    fetchData()
-  });
+      fetchData()
+  },[]);
   return (
         <div className="flex ml-10 mr-10 mt-5 gap-6 justify-center">
           <div className='grid grid-cols-1'>

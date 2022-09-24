@@ -23,7 +23,7 @@ export default function ProductsCom() {
       setLoading(false);
     }
     fetchData()
-  });
+  },[]);
   //console.log(Products)
   return (
       <div className="flex ml-10 mr-10 mt-5 gap-6 justify-center">
