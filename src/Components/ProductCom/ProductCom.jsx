@@ -1,28 +1,31 @@
 import {React,useState,useEffect} from 'react'
+import { useDispatch, useSelector } from 'react-redux';
 import {useParams} from "react-router-dom";
+import { SELETED_PRODUCT } from '../../redux/actions/actions';
 import ProductDetails from './ProductDetails';
 
 export default function ProductCom() {
     let { id } = useParams();
     const [Loading, setLoading] = useState(true);
-    const [Product, setProduct] = useState([]);
+    //const [Product, setProduct] = useState([]);
+    //const Products = useSelector(state => state.AllProductReducer.products);
+    const Product = useSelector(state => state.SelectedProduct.product)
+    const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchData = async () =>{
       setLoading(true);
       try {
-        const response = await fetch(`https://fakestoreapi.com/products/${parseInt(id)}`)
+        const response = await fetch(`https://dummyjson.com/products/${parseInt(id)}`)
         const json = await response.json();
-        setProduct(json);
+        dispatch(SELETED_PRODUCT(json));
       } catch (error) {
         console.error(error.message);
       }
       setLoading(false);
     }
-    setTimeout(
-      fetchData(),1000
-    )
-  }, []);
+    fetchData()
+  });
   return (
         <div className="flex ml-10 mr-10 mt-5 gap-6 justify-center">
           <div className='grid grid-cols-1'>

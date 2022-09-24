@@ -9,7 +9,7 @@ import HomeCom from './Components/HomeCom/HomeCom';
 import ProductsCom from './Components/ProductCom/ProductsCom';
 import CartCom from './Components/CartCom/CartCom';
 import ProductCom from './Components/ProductCom/ProductCom';
-import store from './redux/store/store';
+import store from './redux/store';
 import { Provider } from 'react-redux';
 
 function App() {
@@ -17,6 +17,7 @@ function App() {
     <div className="App">
       <BrowserRouter>
         <NavBarCom />
+        <CartCom />
         <Routes>
           <Route exact path='/' element={<HomeCom />}></Route>
           <Route path='/products' element={<ProductsCom />}></Route>
@@ -26,11 +27,6 @@ function App() {
       </BrowserRouter>
     </div>
   );
-}
-
-const ApplyStore = () =>
-{
-  return <Provider store={store}><App/> </Provider>
 }
 
 export default App;

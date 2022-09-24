@@ -1,26 +1,30 @@
 import {React, useState, useEffect} from 'react'
+import { useDispatch, useSelector } from 'react-redux';
+import { RMV_SELETED_PRODUCT, SET_PRODUCTS } from '../../redux/actions/actions';
 import ProductCard from './ProductCard'
 
 export default function ProductsCom() {
   const [Loading, setLoading] = useState(true);
-  const [Products, setProducts] = useState([]);
+  //const [Products, setProducts] = useState([]);
+  const Products = useSelector(state => state.AllProductReducer.products);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const fetchData = async () =>{
       setLoading(true);
       try {
-        const response = await fetch('https://fakestoreapi.com/products')
+        const response = await fetch('https://dummyjson.com/products')
         const json = await response.json();
-        setProducts(json);
+        dispatch(SET_PRODUCTS(json.products));
+        dispatch(RMV_SELETED_PRODUCT());
       } catch (error) {
         console.error(error.message);
       }
       setLoading(false);
     }
-    setTimeout(
-      fetchData(),1000
-    )
-  }, []);
+    fetchData()
+  });
+  //console.log(Products)
   return (
       <div className="flex ml-10 mr-10 mt-5 gap-6 justify-center">
           <div className='grid lg:grid-cols-3 grid-cols-1 md:grid-cols-2 gap-6'>
@@ -36,7 +40,7 @@ export default function ProductsCom() {
                     </div>
                 </div>
               :
-              Products.map((item,index)=> <ProductCard item={item} key={index} />)
+              Products.map((item,index)=> <ProductCard item={item} key={item.id} />)
             }
           </div>
       </div>
