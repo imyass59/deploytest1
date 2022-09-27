@@ -1,22 +1,36 @@
-import {React} from 'react'
+import {React,useEffect} from 'react'
 import {Transition } from '@headlessui/react'
 import {useState} from 'react';
-import { NavLink } from 'react-router-dom';
-import { useDispatch } from 'react-redux';
-import { OPEN_CART } from '../../redux/actions/actions';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { OPEN_CART, USER_LOGIN } from '../../redux/actions/actions';
 import CartCount from './CartCount';
+import ProfilTab from '../UserCom/ProfilTab';
+import getCookie from '../Hookes/Cookies/getCookie';
+import rmCookie from '../Hookes/Cookies/rmCookie';
+import getData from '../Hookes/JWT/getData';
 
 
 export default function NavBarCom() {
     const [isOpen, setIsOpen] = useState(false);
     const ActiveNavLink = 'text-gray-300 px-3 py-2 rounded-md text-sm font-medium bg-gray-700 text-white';
     const NotActiveNavLink = 'text-gray-300 hover:bg-gray-700 hover:text-white px-3 py-2 rounded-md text-sm font-medium';
-    const dispatch = useDispatch();
 
+    const Token = useSelector(state => state.UserReducer.UserToken);
+    const navigate = useNavigate();
+    const IsLogin = useSelector(state => state.UserReducer.isLogin);
+    const dispatch = useDispatch();
     const HandleOpen = () =>
     {
        dispatch(OPEN_CART())
     }
+    
+    useEffect(() =>
+    {
+        if(getCookie("jwt-token")){dispatch(USER_LOGIN(true));}
+        getData();
+        
+    },[])
     return (
         <nav className="bg-gray-800">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -42,14 +56,27 @@ export default function NavBarCom() {
               </div>
               <div className='flex flex-row justify-center items-center gap-5'>
                 <div className="flex flex-cols justify-center items-center text-white text-sm font-medium">
-                  <div className="ml-10 flex items-baseline space-x-4 space-x-reverse">
-                    <button className="text-2xl relative" onClick={()=>HandleOpen()}>
+                  <div className="flex flex-row items-center justify-center gap-10 space-x-4 space-x-reverse">
+                    <button className="text-2xl mt-2 relative flex flex-row items-center justify-center" onClick={()=>HandleOpen()}>
                         {/*<RingCartCom />*/}
                         <CartCount />
                         <svg xmlns="http://www.w3.org/2000/svg" className="h-7 w-7" viewBox="0 0 20 20" fill="currentColor">
                             <path d="M3 1a1 1 0 000 2h1.22l.305 1.222a.997.997 0 00.01.042l1.358 5.43-.893.892C3.74 11.846 4.632 14 6.414 14H15a1 1 0 000-2H6.414l1-1H14a1 1 0 00.894-.553l3-6A1 1 0 0017 3H6.28l-.31-1.243A1 1 0 005 1H3zM16 16.5a1.5 1.5 0 11-3 0 1.5 1.5 0 013 0zM6.5 18a1.5 1.5 0 100-3 1.5 1.5 0 000 3z" />
                         </svg>
                     </button>
+                    <div className='text-2xl relative flex flex-row justify-center items-center'>
+                      {
+                        (IsLogin)
+                        ?
+                        (<ProfilTab />)
+                        :
+                        (
+                          <NavLink to="login">
+                            <button className="flex ml-auto text-sm text-white bg-indigo-500 border-0 py-2 px-4 focus:outline-none hover:bg-indigo-600 rounded">Login</button>
+                          </NavLink>
+                        )
+                      }
+                    </div>
                   </div>
                 </div>
               <div className="-mr-2 flex md:hidden">

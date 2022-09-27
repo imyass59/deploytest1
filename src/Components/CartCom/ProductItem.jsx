@@ -1,12 +1,26 @@
-import {React,Fragment} from 'react'
+import {React,Fragment,useState} from 'react'
 import { useDispatch } from 'react-redux';
-import { REMOVE_FROM_CART } from '../../redux/actions/actions';
+import { CHANGE_QTY_ITEM, REMOVE_FROM_CART } from '../../redux/actions/actions';
 
 export default function ProductItem(props) {
     const product = props.product;
+    const [count, setCount] = useState(1);
+    const Check = () => {
+      if(count<=1) return;
+      else setCount(count-1)
+    };
+
     const dispatch = useDispatch();
     const RemoveItem = () =>{
       dispatch(REMOVE_FROM_CART(parseInt(product.product.id)))
+    }
+    const AddCount = () =>
+    {
+      const payload = {
+        id : parseInt(product.product.id),
+        qty : count
+      }
+      dispatch(CHANGE_QTY_ITEM(payload));
     }
   return (
     <Fragment>
@@ -50,15 +64,15 @@ export default function ProductItem(props) {
                                 <button data-action="decrement" className="bg-gray-300 w-full flex justify-center items-center text-gray-600 hover:text-gray-700 hover:bg-gray-400 rounded-l cursor-pointer outline-none" onClick={()=> Check()}>
                                     <span className="text-2xl font-thin text-center flex items-center justify-center">−</span>
                                 </button>
-                                <input type="number" className="focus:outline-none text-center bg-gray-300 font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-700  outline-none" name="custom-input-number" value={`${count}`}></input>
+                                <span type="number" className="focus:outline-none text-center bg-gray-300 font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center justify-center text-gray-700 w-32 outline-none" name="custom-input-number">{count}</span>
                                 <button data-action="increment" className="bg-gray-300 text-center w-full flex justify-center items-center  text-gray-600 hover:text-gray-700  rounded-r cursor-pointer" onClick={()=> setCount(count+1)}>
                                     <span className=" text-2xl font-thin flex items-center justify-center">+</span>
                                 </button>
                             </div>
-                            <button data-action="add" className="text-gray-100 text-center w-24 flex justify-center items-center  bg-indigo-500  hover:bg-indigo-700  rounded-r cursor-pointer" onClick={()=>AddCount()}>
-                                    <span className=" text-2xl flex items-center justify-center">Add</span>
+                            <button data-action="add" className="text-gray-100 text-center w-24 flex justify-center items-center  bg-indigo-500  hover:bg-indigo-700  rounded-md cursor-pointer" onClick={()=>AddCount()}>
+                                    <span className=" text-xl flex items-center justify-center">Add</span>
                             </button>
-                        </span>*/}
+  </span>*/}
             </li>
     </Fragment>
   )

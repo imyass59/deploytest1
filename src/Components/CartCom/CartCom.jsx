@@ -2,7 +2,7 @@ import { Fragment, useState, useEffect } from 'react'
 import { Dialog, Transition } from '@headlessui/react'
 import { XIcon } from '@heroicons/react/outline'
 import { useDispatch, useSelector } from 'react-redux'
-import { CLOSE_CART, OPEN_CART, REMOVE_ALL_CART } from '../../redux/actions/actions'
+import { CHANGE_COUNT_CART, CLOSE_CART, OPEN_CART, REMOVE_ALL_CART } from '../../redux/actions/actions'
 import { Types } from '../../redux/actions/types'
 import ProductItem from './ProductItem'
 import { NavLink } from 'react-router-dom';
@@ -107,6 +107,7 @@ export default function CartCom() {
 
     return total;
   }
+  dispatch(CHANGE_COUNT_CART());
   return (
     <Transition.Root show={CartIsOpen} as={Fragment}>
       <Dialog as="div" className="relative z-10" onClose={setOpen}>

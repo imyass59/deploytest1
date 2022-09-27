@@ -1,6 +1,7 @@
 import {React,useState} from 'react'
 import { useDispatch, useSelector } from 'react-redux';
 import { ADD_TO_CART, CHANGE_COUNT_CART } from '../../redux/actions/actions';
+import PaypaleCheckOutButton from '../PaymentIntegration/PaypaleCheckOutButton';
 
 export default function ProductDetails(props) {
     const [count, setCount] = useState(1);
@@ -12,6 +13,10 @@ export default function ProductDetails(props) {
         else setCount(count-1)
     };
 
+    const product = {
+        product : item,
+        qty : count
+    }
     const HandleAddToCart = () =>
     {
         const itemSelect = {
@@ -25,8 +30,8 @@ export default function ProductDetails(props) {
         <div data-id={`${details.id}`}>
             <section className="text-gray-700 body-font overflow-hidden bg-white">
             <div className="container px-5 py-24 mx-auto">
-            <div className="lg:w-4/5 mx-auto flex flex-wrap">
-            <img alt="ecommerce" className="lg:w-1/2 w-full object-cover object-center rounded border border-gray-200" src={details.thumbnail} />
+            <div className="lg:w-4/5 mx-auto flex flex-wrap ">
+                <img alt="ecommerce" className="lg:w-1/2 md:w-1/2 w-3/2 h-3/2 object-cover object-center rounded border border-gray-200 " src={details.thumbnail} />
             <div className="lg:w-1/2 w-full lg:pl-10 lg:py-6 mt-6 lg:mt-0">
                 <h2 className="text-sm title-font text-gray-500 tracking-widest uppercase">{details.category}</h2>
                 <h1 className="text-gray-900 text-3xl title-font font-medium mb-1">{details.title}</h1>
@@ -82,7 +87,7 @@ export default function ProductDetails(props) {
                             <button data-action="decrement" className="bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-l cursor-pointer outline-none" onClick={()=> Check()}>
                                 <span className="m-auto text-2xl font-thin">−</span>
                             </button>
-                            <input type="number" className="focus:outline-none text-center w-full bg-gray-300 font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default flex items-center text-gray-700  outline-none" name="custom-input-number" value={`${count}`}></input>
+                            <span type="number" className="focus:outline-none flex items-center justify-center text-center w-full bg-gray-300 font-semibold text-md hover:text-black focus:text-black  md:text-basecursor-default text-gray-700  outline-none" name="custom-input-number">{count}</span>
                             <button data-action="increment" className="bg-gray-300 text-gray-600 hover:text-gray-700 hover:bg-gray-400 h-full w-20 rounded-r cursor-pointer" onClick={()=> setCount(count+1)}>
                                 <span className="m-auto text-2xl font-thin">+</span>
                             </button>
@@ -103,6 +108,9 @@ export default function ProductDetails(props) {
                     </button> 
                     */
                 }
+                </div>
+                <div className="w-full mt-5 z-0 relative">
+                    <PaypaleCheckOutButton product={product} className="absolute top-0 left-0"/>
                 </div>
             </div>
             </div>

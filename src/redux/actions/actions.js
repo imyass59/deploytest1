@@ -64,3 +64,40 @@ export const CHANGE_COUNT_CART = () =>
         type : Types.CHANGE_COUNT_CART,
     }
 }
+
+export const CHANGE_QTY_ITEM = (id,qty) =>
+{
+    return {
+        type : Types.CHANGE_QTY_ITEM,
+        payload : {
+            id : id,
+            qty : qty
+        }
+    }
+}
+
+export const USER_LOGIN = (IsLogin) =>
+{
+    return {
+        type : Types.USER_LOGIN,
+        payload : IsLogin
+    }
+}
+
+export const SET_TOKEN = (token) =>
+{
+    return {
+        type : Types.SET_TOKEN,
+        payload : {
+            Token : token,
+            Date_Login : new Date(Date.now())
+        }
+    }
+}
+
+export const REMOVE_TOKEN = () =>
+{
+    return {
+        type : Types.REMOVE_TOKEN
+    }
+}

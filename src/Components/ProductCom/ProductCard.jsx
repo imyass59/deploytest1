@@ -10,7 +10,7 @@ export default function ProductCard(props) {
                     </div> 
                     <div className="w-2/3 p-4">
                     <h1 className="text-gray-900 font-bold text-2xl line-clamp-2 hover:underline ease-in">
-                        <a href={`products/product/${items.id}`}>{items.title}</a>
+                        <a href={`products/${items.id}`}>{items.title}</a>
                     </h1>
                     <p className="mt-2 text-gray-600 text-sm w-fit line-clamp-3">{items.description}</p>
                     <div className="flex item-center mt-2">
@@ -32,7 +32,7 @@ export default function ProductCard(props) {
                     </div>
                     <div className="flex item-center justify-between mt-3">
                         <h1 className="text-gray-700 font-bold text-xl">${items.price}</h1>
-                        <a href={`products/product/${items.id}`} className="px-3 py-2 bg-indigo-600 hover:bg-indigo-800 text-white text-xs font-bold uppercase rounded">View</a>
+                        <a href={`products/${items.id}`} className="px-3 py-2 bg-indigo-600 hover:bg-indigo-800 text-white text-xs font-bold uppercase rounded">View</a>
                     </div>
                     </div>
                 </div>

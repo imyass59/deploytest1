@@ -19,16 +19,13 @@ const CartItemsReducer = (state = initialState,action) =>
                 //state.CartItems.map((item)=> item.product.id === action.payload.product.id ? {...item,qty : item.qty + action.payload.qty} : item);
                 state.CartItems[exist].qty += action.payload.qty;
                 window.localStorage.setItem("Cart-items",JSON.stringify(state.CartItems));
-                return {
-                    ...state
-                }
             }
             else{
                 state.CartItems.push(action.payload);
                 window.localStorage.setItem("Cart-items",JSON.stringify(state.CartItems));
-                return {
-                    ...state
-                }
+            }
+            return {
+                ...state
             }
         case Types.REMOVE_FROM_CART:
             const newCart = state.CartItems.filter((item) => item.product.id !== action.payload);
@@ -52,6 +49,13 @@ const CartItemsReducer = (state = initialState,action) =>
             return {
                 ...state,
                 CartItems : []
+            }
+        case Types.CHANGE_QTY_ITEM:
+            const item = state.CartItems.findIndex((item) => item.product.id === action.payload.id);
+            if(item>=0){state.CartItems[exist].qty += action.payload.qty;}
+            window.localStorage.setItem("Cart-items",JSON.stringify(state.CartItems));
+            return {
+                ...state
             }
         default:
             return state;
