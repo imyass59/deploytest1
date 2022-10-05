@@ -51,7 +51,7 @@ export default function Profile() {
                         <div className="">
                             <h1 className="text-base font-light">Darcy</h1>
                             <span className="text-base">I am Darcy, I like music, and record videos</span>
-                            <a className="block text-base text-indigo-500 mt-2" target="_blank">https://tailwindcomponents.com/</a>
+                            <a className="block text-base text-indigo-500 mt-2" target="_blank">https://www.linkedin.com/in/ilyass-elkhadiri/</a>
                         </div>
                     </div>
             </div>
